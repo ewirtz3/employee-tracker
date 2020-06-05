@@ -1,6 +1,6 @@
 DROP DATABASE IF EXISTS employees;
 CREATE DATABASE employees;
-USE employees;
+USE employeesDB;
 
 CREATE TABLE department (
     id INTEGER AUTO_INCREMENT PRIMARY KEY,
