@@ -19,7 +19,7 @@ const questionOne = function () {
       ],
     })
     .then((answer) => {
-      switch (answer) {
+      switch (answer.choice) {
         case "View All Employees":
           viewAllEmployees();
           break;
@@ -41,14 +41,19 @@ const questionOne = function () {
         case "Update Employee Manager":
           updateManager();
           break;
+        case "Exit":
+          connection.end();
+          break;
       }
     });
 };
 
+questionOne();
+
 function viewAllEmployees() {
   const query = "SELECT * FROM employee";
   connection.query(query, (err, res) => {
-    cTable(res);
+    console.table(res);
     questionOne();
   });
 }
@@ -62,9 +67,12 @@ function viewByDepartment() {
       choices: ["Sales", "Engineering", "Finance", "Legal"],
     })
     .then((answer) => {
-      const query = "SELECT * FROM employee WHERE department = ?";
-      connection.query(query, [answer], (err, res) => {
-        cTable(res);
+      const id = answer.choice.id;
+      let query = "SELECT * FROM employee";
+      query += "INNER JOIN role ON employee.role_id = role.id";
+      query += "INNER JOIN department ON role.department_id = department.id";
+      connection.query(query, (err, res) => {
+        console.table(res);
         questionOne();
       });
     });
@@ -74,7 +82,15 @@ function viewByManager() {
   inquirer.prompt({
     name: "manager",
     type: "list",
-    message: "Which manager's team woudl you like to view?",
+    message: "Which manager's team would you like to view?",
     choices: [],
   });
 }
+
+function addEmployee() {}
+
+function removeEmployee() {}
+
+function updateRole() {}
+
+function updateManager() {}
