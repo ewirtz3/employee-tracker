@@ -49,5 +49,32 @@ function viewAllEmployees() {
   const query = "SELECT * FROM employee";
   connection.query(query, (err, res) => {
     cTable(res);
+    questionOne();
+  });
+}
+
+function viewByDepartment() {
+  inquirer
+    .prompt({
+      name: "department",
+      type: "list",
+      message: "Which department would you like to view?",
+      choices: ["Sales", "Engineering", "Finance", "Legal"],
+    })
+    .then((answer) => {
+      const query = "SELECT * FROM employee WHERE department = ?";
+      connection.query(query, [answer], (err, res) => {
+        cTable(res);
+        questionOne();
+      });
+    });
+}
+
+function viewByManager() {
+  inquirer.prompt({
+    name: "manager",
+    type: "list",
+    message: "Which manager's team woudl you like to view?",
+    choices: [],
   });
 }
