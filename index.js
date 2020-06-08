@@ -1,6 +1,6 @@
 const inquirer = require("inquirer");
 const connection = require("./db/connection");
-const cTable = require("console.table");
+// const Team = require("./db/queries");
 
 const questionOne = function () {
   inquirer
@@ -58,8 +58,8 @@ function viewAllEmployees() {
   });
 }
 
-function viewByDepartment() {
-  inquirer
+async function viewByDepartment() {
+  await inquirer
     .prompt({
       name: "departmentId",
       type: "list",
@@ -75,7 +75,6 @@ function viewByDepartment() {
       ],
     })
     .then((answer) => {
-      console.log(answer.departmentId);
       const department_id = answer.departmentId;
 
       let query =
@@ -83,7 +82,6 @@ function viewByDepartment() {
       query += "LEFT JOIN role ON employee.id = role.id ";
       query +=
         "LEFT JOIN department ON role.department_id = department.id WHERE department.id = ?;";
-      console.log(query);
 
       connection.query(query, department_id, (err, res) => {
         console.table(res);
@@ -92,13 +90,44 @@ function viewByDepartment() {
     });
 }
 
-function viewByManager() {
-  inquirer.prompt({
-    name: "manager",
-    type: "list",
-    message: "Which manager's team would you like to view?",
-    choices: [],
-  });
+async function viewByManager() {
+  const managers = await connection.query(
+    "SELECT employee.id, CONCAT(employee.first_name, ' ', employee.last_name) as name FROM employee WHERE manager_id IS NULL",
+    (err, res) => {
+      if (err) throw err;
+      console.log(res);
+      return res;
+    }
+  );
+
+  // const manager_id = await inquirer
+  //   .prompt({
+  //     name: "manager",
+  //     type: "list",
+  //     message: "Which manager's team would you like to view?",
+  //     choices: function () {
+  //       let managerArray = [];
+  //       for (let i = 0; i < managers.length; i++) {
+  //         managerArray.push(managers[i].name);
+  //       }
+  //       return managerArray;
+  //     },
+  //   })
+  //   .then((answer) => {
+  //     console.log(answer);
+  //     return answer.id;
+  //   });
+
+  // const direct_reports = await ((manager_id) => {
+  //   connection.query(
+  //     "SELECT CONCAT(employee.first_name, '', employee.last_name), role.title, department.name AS department LEFT JOIN role ON employee.role_id = role.id LEFT JOIN department ON role.department_id = department.id WHERE department.id = ?",
+  //     manager_id,
+  //     (err, res) => {
+  //       if (err) throw err;
+  //       console.table(res);
+  //     }
+  //   );
+  // });
 }
 
 function addEmployee() {}
