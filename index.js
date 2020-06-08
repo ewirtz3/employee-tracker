@@ -95,39 +95,39 @@ async function viewByManager() {
     "SELECT employee.id, CONCAT(employee.first_name, ' ', employee.last_name) as name FROM employee WHERE manager_id IS NULL",
     (err, res) => {
       if (err) throw err;
-      console.log(res);
+      console.log(res[1]);
       return res;
     }
   );
 
-  // const manager_id = await inquirer
-  //   .prompt({
-  //     name: "manager",
-  //     type: "list",
-  //     message: "Which manager's team would you like to view?",
-  //     choices: function () {
-  //       let managerArray = [];
-  //       for (let i = 0; i < managers.length; i++) {
-  //         managerArray.push(managers[i].name);
-  //       }
-  //       return managerArray;
-  //     },
-  //   })
-  //   .then((answer) => {
-  //     console.log(answer);
-  //     return answer.id;
-  //   });
+  const manager_choices = function (managers) {
+    for (i = 0; i < managers.length; i++) {
+      id: managers[i].id;
+      name: managers[i].name;
+    }
+  };
+  const manager_id = await inquirer
+    .prompt({
+      name: "manager_id",
+      type: "list",
+      message: "Which manager's team would you like to view?",
+      choices: manager_choices,
+    })
+    .then((manager_id) => {
+      console.log(manager_id);
+      return manager_id.id;
+    });
 
-  // const direct_reports = await ((manager_id) => {
-  //   connection.query(
-  //     "SELECT CONCAT(employee.first_name, '', employee.last_name), role.title, department.name AS department LEFT JOIN role ON employee.role_id = role.id LEFT JOIN department ON role.department_id = department.id WHERE department.id = ?",
-  //     manager_id,
-  //     (err, res) => {
-  //       if (err) throw err;
-  //       console.table(res);
-  //     }
-  //   );
-  // });
+  const direct_reports = await ((manager_id) => {
+    connection.query(
+      "SELECT CONCAT(employee.first_name, '', employee.last_name), role.title, department.name AS department LEFT JOIN role ON employee.role_id = role.id LEFT JOIN department ON role.department_id = department.id WHERE department.id = ?",
+      manager_id,
+      (err, res) => {
+        if (err) throw err;
+        console.table(res);
+      }
+    );
+  });
 }
 
 function addEmployee() {}

@@ -1,13 +1,13 @@
-const connection = require("./connection");
+// const connection = require("./connection");
 
-class Team {
-  constructor(connection) {
-    this.connection = connection;
-  }
+// class Team {
+//   constructor(connection) {
+//     this.connection = connection;
+//   }
 
-  findManagers() {
-    return this.
-  }
-}
+//   findManagers() {
+//     return this.
+//   }
+// }
 
-module.exports = new Team(connection);
+// module.exports = new Team(connection);
