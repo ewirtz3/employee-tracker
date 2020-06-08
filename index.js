@@ -61,17 +61,31 @@ function viewAllEmployees() {
 function viewByDepartment() {
   inquirer
     .prompt({
-      name: "department",
+      name: "departmentId",
       type: "list",
       message: "Which department would you like to view?",
-      choices: ["Sales", "Engineering", "Finance", "Legal"],
+      choices: [
+        {
+          name: "Sales",
+          value: 1,
+        },
+        { name: "Engineering", value: 2 },
+        { name: "Finance", value: 3 },
+        { name: "Legal", value: 4 },
+      ],
     })
     .then((answer) => {
-      const id = answer.choice.id;
-      let query = "SELECT * FROM employee";
-      query += "INNER JOIN role ON employee.role_id = role.id";
-      query += "INNER JOIN department ON role.department_id = department.id";
-      connection.query(query, (err, res) => {
+      console.log(answer.departmentId);
+      const department_id = answer.departmentId;
+
+      let query =
+        "SELECT employee.id, employee.first_name, employee.last_name FROM employee ";
+      query += "LEFT JOIN role ON employee.id = role.id ";
+      query +=
+        "LEFT JOIN department ON role.department_id = department.id WHERE department.id = ?;";
+      console.log(query);
+
+      connection.query(query, department_id, (err, res) => {
         console.table(res);
         questionOne();
       });
