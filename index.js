@@ -13,9 +13,7 @@ const questionOne = function () {
         "View All Employees by Department",
         "View All Employees by Manager",
         "Add Employee",
-        "Remove Employee",
-        "Update Employee Role",
-        "Update Employee Manager",
+        "Exit",
       ],
     })
     .then((answer) => {
@@ -31,15 +29,6 @@ const questionOne = function () {
           break;
         case "Add Employee":
           addEmployee();
-          break;
-        case "Remove Employee":
-          removeEmployee();
-          break;
-        case "Update Employee Role":
-          updateRole();
-          break;
-        case "Update Employee Manager":
-          updateManager();
           break;
         case "Exit":
           connection.end();
@@ -177,9 +166,3 @@ async function addEmployee() {
     }
   );
 }
-
-function removeEmployee() {}
-
-function updateRole() {}
-
-function updateManager() {}
