@@ -4,7 +4,7 @@
 
 This application utilizes Node.js, Inquirer, and MySQL to ask the user questions in order to manage a company's employees. Using Node prompts, the user may choose to View All Employees, View Employees by Department, View Employees by Manager, or Add an Employee.
 
-Link to repository: https://github.com/ewirtz3/employee-tracker
+Link to YouTube demonstration of functionality: https://youtu.be/KkssxFqcMT0
 
 <img src="https://img.shields.io/github/last-commit/ewirtz3/note-taker?style=for-the-badge"/>
 
