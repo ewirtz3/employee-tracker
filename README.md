@@ -6,7 +6,7 @@ This application utilizes Node.js, Inquirer, and MySQL to ask the user questions
 
 Link to YouTube demonstration of functionality: https://youtu.be/KkssxFqcMT0
 
-<img src="https://img.shields.io/github/last-commit/ewirtz3/note-taker?style=for-the-badge"/>
+<img src="https://img.shields.io/github/last-commit/ewirtz3/employee-tracker?style=for-the-badge"/>
 
 ## Table of Contents
 
